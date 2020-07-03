@@ -1,13 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Fri May 10 19:06:44 2019
-
-@author: Programmer
-"""
-
-
-
-
 
 import csv
 import numpy as np
@@ -30,7 +21,7 @@ def compute_LK(LK_, support_list, k, num_trans, min_support):
        for j in range(i+1, len(LK_)):  
             L1 = sorted(list(LK_[i])[:k-2])
             L2 = sorted(list(LK_[j])[:k-2])
-            if L1 == L2: # if the first k-1 terms are the same in two itemsets, calculate the intersection support
+            if L1 == L2: # jika terdapat dua itemset yang sama pada k-1, maka hitung intersection support
                 union = np.multiply(support_list[LK_[i]], support_list[LK_[j]])
                 union_support = np.sum(union) / num_trans
                 if union_support >= min_support:
@@ -194,7 +185,7 @@ def output_handling(support_list):
 	support_list = dict((tuple(sorted(list(k), key=lambda x: (x))), v) for k, v in support_list.items())
 	return L, support_list
 def compute_vertical_bitvector_data(data):
-	#---build item to idx mapping---#
+	#---bentuk data menjadi idx mapping---#
 	idx = 0
 	item2idx = {}
 	for transaction in data:
@@ -204,7 +195,7 @@ def compute_vertical_bitvector_data(data):
                        item2idx[item] = idx
                        idx += 1
 	idx2item = { idx : item for item, idx in item2idx.items() }
-	#---build vertical data---#
+	#---bbentuk data vertikal---#
 	vb_data = np.zeros((len(item2idx), len(data)), dtype=int)
 	for trans_id, transaction in enumerate(data):
 		for item in transaction:

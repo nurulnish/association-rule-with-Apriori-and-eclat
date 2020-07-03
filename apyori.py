@@ -1,9 +1,5 @@
 #!/usr/bin/env python
 
-"""
-a simple implementation of Apriori algorithm by Python.
-"""
-
 import sys
 import csv
 import argparse
@@ -61,29 +57,29 @@ class TransactionManager(object):
     @property
     def num_transaction(self):
         """
-        Returns the number of transactions.
+        Mengembalikan jumlah transaksi.
         """
         return self.__num_transaction
 
     @property
     def items(self):
         """
-        Returns the item list that the transaction is consisted of.
+        Mengembalikan daftar item yang terdiri dari transaksi.
         """
         return sorted(self.__items)
 
     @staticmethod
     def create(transactions):
         """
-        Create the TransactionManager with a transaction instance.
-        If the given instance is a TransactionManager, this returns itself.
+        Buat manager transaction dengan instance transaction.
+        Jika instance yang diberikan adalah TransactionManager, maka akan kembali ke TransactionManager.
         """
         if isinstance(transactions, TransactionManager):
             return transactions
         return TransactionManager(transactions)
 
 
-# Ignore name errors because these names are namedtuples.
+# Abaikan kesalahan nama karena nama-nama ini berisi tupel.
 SupportRecord = namedtuple( # pylint: disable=C0103
     'SupportRecord', ('items', 'support'))
 RelationRecord = namedtuple( # pylint: disable=C0103
@@ -99,13 +95,13 @@ OrderedStatistic = namedtuple( # pylint: disable=C0103
 
 def create_next_candidates(prev_candidates, length):
     """
-    Returns the apriori candidates as a list.
+    Mengembalikan kandidat apriori sebagai daftar.
 
     Arguments:
-        prev_candidates -- Previous candidates as a list.
-        length -- The lengths of the next candidates.
+        prev_candidates -- kandidat sebelumnya sebagai list.
+        length -- panjang kandidat berikutnya.
     """
-    # Solve the items.
+    # Penyelesaian masalah.
     #print('first')
     item_set = set()
     for candidate in prev_candidates:
@@ -113,17 +109,15 @@ def create_next_candidates(prev_candidates, length):
             item_set.add(item)
     items = sorted(item_set)
     #print(items)
-    # Create the temporary candidates. These will be filtered below.
+    # buat kandidat sementara, akan ada penyaringan pada bagian berikutnya.
     tmp_next_candidates = (frozenset(x) for x in combinations(items, length))
    #print(len(tmp_next_candidates))
     #print(length, tmp_next_candidates)
-    # Return all the candidates if the length of the next candidates is 2
-    # because their subsets are the same as items.
+    # Mengembalikan semua kandidat jika panjang kandidat berikutnya adalah 2, karena himpunan bagiannya sama dengan item.
     if length < 3:
         return list(tmp_next_candidates)
 
-    # Filter candidates that all of their subsets are
-    # in the previous candidates.
+    # Saring semua subset yang ada pada kandidat sebelumnya,
     next_candidates = [
         candidate for candidate in tmp_next_candidates
         if all(
@@ -214,7 +208,7 @@ def apriori(transactions, **kwargs):
     _filter_ordered_statistics = kwargs.get(
         '_filter_ordered_statistics', filter_ordered_statistics)
 
-    # Calculate supports.
+    # hitung supports.
     transaction_manager = TransactionManager.create(transactions)
     support_records = _gen_support_records(
         transaction_manager, min_support, max_length=max_length)
