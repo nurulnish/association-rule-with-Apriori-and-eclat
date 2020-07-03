@@ -30,6 +30,8 @@ def visualization(data):
 path='data.csv'
 data=readData(path)
 #Call apriori algorithm from class apyori
+
+# disini tempat ngubah min_sup sama min_conf
 association_rules = apriori(data, min_support=0.001, min_confidence=0.001)  
 #convert assosiations to list
 association_results = list(association_rules)  
