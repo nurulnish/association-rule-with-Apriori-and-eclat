@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Fri May 10 14:00:21 2019
-"""
+
 import numpy as np  
 import matplotlib.pyplot as plt  
 import pandas as pd  
@@ -10,14 +8,14 @@ from apyori import apriori
 import csv 
 from TransactionEncoder import TransactionEncoder
 
-#Read Data by CSV library----------------------------------
+#Membaca data CSV----------------------------------
 def readData(data_path):
  with open(data_path, 'r') as f:
     reader = csv.reader(f, delimiter=',')
     data = list(reader)
  return data    
 #----------------------------------------------------------
-#Visualize Data Frequency by seaborn and pandas library 
+#Visualisasi Data Frequency dengan menggunakan seaborn dan pandas
 def visualization(data):
     te = TransactionEncoder()
     te_ary = te.fit(data).transform(data)
@@ -29,17 +27,17 @@ def visualization(data):
     sns.barplot(x=Names,y=Freq)
 path='data.csv'
 data=readData(path)
-#Call apriori algorithm from class apyori
+#Memanggil algoritma apriori dari kelas apyori
 
 # disini tempat ngubah min_sup sama min_conf
 association_rules = apriori(data, min_support=0.001, min_confidence=0.001)  
-#convert assosiations to list
+#mengubah assosiations menjadi list
 association_results = list(association_rules)  
 
 print("We find "+str(len(association_results))+" assosiation rule.")  
 #print(association_results)  
 result=open("myresAPriory.txt", "w")
-#visualization(data)
+#visualisasi(data)
 
 result.write("Rules\t Support \t Confidence \t Lift")
 for item in association_results:
