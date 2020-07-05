@@ -81,7 +81,7 @@ def calc_support(items,data,idx2item,num_transaction):
 
         return float(np.sum(sum_indexes)) / num_transaction 
 class eclat_runner:
-
+#mungkin ubah min_sup nya di sini?
    def __init__(self, num_trans, min_support):
         self.num_trans = num_trans
         self.min_support = min_support * num_trans
@@ -106,7 +106,7 @@ class eclat_runner:
                            suffix.append([itemset_sub, union_bitvector])
 
                 self.run(prefix+[itemset], sorted(suffix, key=lambda x: (x[0]), reverse=True))
-
+    #hasil di sini ya 
    def eclat(data, min_support):
        OrderedStatistic = namedtuple( 
       'OrderedStatistic', ('items_base', 'items_add', 'confidence', 'lift',))
@@ -135,6 +135,7 @@ class eclat_runner:
        print(len(support_list))
        for suppRec in  support_list:
         
+        #rumus confidence dan lift
         items=suppRec
         items=frozenset(items)
         for combination_set in combinations(sorted(items), len(items) - 1):
@@ -145,12 +146,14 @@ class eclat_runner:
 
          lift = confidence / calc_support(items_add,vb_data,idx2item,9835)
          #print('items',items,'combination_set',combination_set,confidence,lift,calc_support(suppRec,vb_data,idx2item,9835),calc_support(items_base,vb_data,idx2item,9835),calc_support(items_add,vb_data,idx2item,9835))
+        
+        #masukin min_conf, pembentukan output yang akan dikeluarkan
          if(confidence>0.1):
            f.write(str(items))
            f.write(',')
-           f.write(str(items_base))
+           f.write(str(items_base)) #ini keknya gausah ditampilin deh
            f.write(',')
-           f.write(str(items_add))
+           f.write(str(items_add)) #item terikat, kalo beli mie ya beli saos. si saos adalah item add
            f.write(',')
            f.write(str(calc_support(suppRec,vb_data,idx2item,9835)))
            f.write(',')
@@ -228,17 +231,8 @@ def write_result(result, result_path):
 				output_string += '(' + str(result[1][itemset]) +  ')'
 				file_data.writerow([output_string])
 	print('Results have been successfully saved to: %s' % (result_path))
-
+#import data di sini. ubah nama file csv jadinya di sini
 data=readData('data.csv')
-#pdata=GetData(data)
-#print(pdata)
-#df = pd.DataFrame(te_ary, columns=te.columns_)
-#df=df.applymap(lambda x: 1 if x==True else 0)
-#myData=df.apply(pd.value_counts).T.sort_values(by=[1],ascending=False)
-#Names=myData.index
-#Freq=myData[1].values
-#mylist=df.values.tolist()
-#mydict=dict(zip(Names, mylist))
-#data=mydict
+
 result =eclat_runner.eclat(data,0.006)
 write_result(result,'out.txt')

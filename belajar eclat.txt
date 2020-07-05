@@ -1,0 +1,59 @@
+ Arguments
+    ---------------------
+    data
+        The `data` is a pandas dataframe format. The data should look like the example below.
+        In this case, each line represents the purchase of one person.
+            >>> Example of data format
+            	0	1	2	3
+            0	milk	beer	bread	butter
+            1	coffe	bread	butter	NaN
+            2	coffe	bread	butter	NaN
+            3	milk	coffe	bread	butter
+            4	beer	NaN	NaN	NaN
+            5	butter	NaN	NaN	NaN
+            6	bread	NaN	NaN	NaN
+            7	bean	NaN	NaN	NaN
+            8	rice	bean	NaN	NaN
+            9	rice	NaN	NaN	NaN
+        
+        After get a ECLAT class instance, a binary dataframe is created,
+        in which the column names are the product names. 0 = 'No' 1 = 'Yes' for a transaction that occurred.
+            >>> eclat_instance = ECLAT(df=data)
+                eclat_instance.df_bin
+            	bean	beer	bread	butter	milk	rice	coffe
+            0	0	1	1	1	1	0	0
+            1	0	0	1	1	0	0	1
+            2	0	0	1	1	0	0	1
+            3	0	0	1	1	1	0	1
+            4	0	1	0	0	0	0	0
+            5	0	0	0	1	0	0	0
+            6	0	0	1	0	0	0	0
+            7	1	0	0	0	0	0	0
+            8	1	0	0	0	0	1	0
+            9	0	0	0	0	0	1	0
+    verbose
+        Show a progress bar in three steps.
+
+=================================================================================
+min_support
+            Must be 'None' to return all features and supports or 'Float' to filter features by support
+        separator
+            Separator for the output dictionary key. Just to organize. default = ' & '
+        verbose
+            `True` to enables the loading bar.
+==================================================================================
+Unlike the a priori method, the ECLAT method is not based on the calculation of confidence and lift, therefore the ECLAT method is based on the calculation of the support conjunctions of the variables.
+===================================================================================
+- Performes a scan in LK-1 and compute the next large itemset LK,
+	  At the k-th iteration, the LK set are those whose every (k-1) item subset is in Lk-1,
+	  and have a sum of the bit vector union greater than minimum support.
+	  (k-1) is inclusive, so in implementation we need to set index to [:k-2]
+	- Input:
+		- LK_: the large K-1 itemset, LK-1
+		- k: the k-th iteration
+		- support_list: a dictionary recording the supports of all L sets
+		- num_trans: number of transactions
+		- min_support: minimum support
+	- Output:
+		- LK: the large itemset LK for the k-th iteration
+		- supportK: a dictionary recording the supports for each itemsets in LK

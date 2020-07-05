@@ -15,7 +15,7 @@ def readData(data_path):
     data = list(reader)
  return data    
 #----------------------------------------------------------
-#Visualisasi Data Frequency dengan menggunakan seaborn dan pandas
+#Visualisasi Data Frequency dengan menggunakan seaborn dan pandas, import data csv di sini (ganti nama file di sini yah)
 def visualization(data):
     te = TransactionEncoder()
     te_ary = te.fit(data).transform(data)
@@ -34,6 +34,7 @@ association_rules = apriori(data, min_support=0.001, min_confidence=0.001)
 #mengubah assosiations menjadi list
 association_results = list(association_rules)  
 
+#hasil di sini ya
 print("We find "+str(len(association_results))+" assosiation rule.")  
 #print(association_results)  
 result=open("myresAPriory.txt", "w")
