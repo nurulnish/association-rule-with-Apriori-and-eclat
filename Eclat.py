@@ -48,7 +48,7 @@ def compute_L1(data, idx2item, num_trans, min_support):
 	L1 = []
 	support_list = {}
 	for idx, bit_list in enumerate(data):
-		support = np.sum(bit_list) / num_trans
+		support = np.sum(bit_list) / num_trans #rumus support 
 		if support >= min_support:
                  support_list[frozenset([idx2item[idx]])] = bit_list
                  L1.append([idx2item[idx]])
@@ -148,10 +148,10 @@ class eclat_runner:
          #print('items',items,'combination_set',combination_set,confidence,lift,calc_support(suppRec,vb_data,idx2item,9835),calc_support(items_base,vb_data,idx2item,9835),calc_support(items_add,vb_data,idx2item,9835))
         
         #masukin min_conf, pembentukan output yang akan dikeluarkan
-         if(confidence>0.1):
-           f.write(str(items))
+         if(confidence>0.1): #coba dibuat >=0.001
+           f.write(str(items)) #ini keknya gausah ditampilin deh
            f.write(',')
-           f.write(str(items_base)) #ini keknya gausah ditampilin deh
+           f.write(str(items_base)) 
            f.write(',')
            f.write(str(items_add)) #item terikat, kalo beli mie ya beli saos. si saos adalah item add
            f.write(',')
