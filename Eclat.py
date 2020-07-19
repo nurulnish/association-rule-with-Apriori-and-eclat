@@ -81,10 +81,10 @@ def calc_support(items,data,idx2item,num_transaction):
 
         return float(np.sum(sum_indexes)) / num_transaction 
 class eclat_runner:
-#mungkin ubah min_sup nya di sini?
+#ubah min_sup nya di sini
    def __init__(self, num_trans, min_support):
         self.num_trans = num_trans
-        self.min_support = min_support * num_trans
+        self.min_support = 0.2
         self.support_list = {}
 		
 
@@ -148,7 +148,7 @@ class eclat_runner:
          #print('items',items,'combination_set',combination_set,confidence,lift,calc_support(suppRec,vb_data,idx2item,9835),calc_support(items_base,vb_data,idx2item,9835),calc_support(items_add,vb_data,idx2item,9835))
         
         #masukin min_conf, pembentukan output yang akan dikeluarkan
-         if(confidence>0.1): #coba dibuat >=0.001
+         if(confidence>0.05): 
            f.write(str(items)) #ini keknya gausah ditampilin deh
            f.write(',')
            f.write(str(items_base)) 
@@ -232,7 +232,7 @@ def write_result(result, result_path):
 				file_data.writerow([output_string])
 	print('Results have been successfully saved to: %s' % (result_path))
 #import data di sini. ubah nama file csv jadinya di sini
-data=readData('data.csv')
+data=readData('alldata.csv')
 
 result =eclat_runner.eclat(data,0.006)
 write_result(result,'out.txt')
