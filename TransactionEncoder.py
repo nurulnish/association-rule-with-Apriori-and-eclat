@@ -1,14 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu May  9 23:22:07 2019
-
-"""
-
-# Sebastian Raschka 2014-2019
-# mlxtend Machine Learning Library Extensions
-# Author: Sebastian Raschka <sebastianraschka.com>
-#
-# License: BSD 3 clause
 
 import numpy as np
 from scipy.sparse import csr_matrix
