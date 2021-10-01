@@ -38,7 +38,6 @@ association_results = list(association_rules)
 print("We find "+str(len(association_results))+" assosiation rule.")  
 #print(association_results)  
 result=open("myresAPriory.txt", "w")
-#visualisasi(data)
 
 result.write("Rules\t Support \t Confidence \t Lift")
 for item in association_results:
@@ -46,24 +45,10 @@ for item in association_results:
     items_1 = [x for x in pair]
     pair = item[2][0][1]  
     items_2 = [x for x in pair]
-#    print("Rule: " + str(items_1)+ " -> " +str( items_2))
-#    print("Support: " + str(item[1]))
-#    print("Confidence: " + str(item[2][0][2]))
-#    print("Lift: " + str(item[2][0][3]))
-#    print("=====================================")
-    
+
     result.write("\n"+ str(items_1)+ " -> " +str( items_2))
     result.write("\t" + str(item[1]))
     result.write("\t" + str(item[2][0][2]))
     result.write("\t" + str(item[2][0][3]))
-#for item in association_results:
- #   result.write(str(item))
-  #  result.write('----------------------------------------------'+'\n')
-#    pair = item[0] 
-#    items = [x for x in pair]
-#    print("Rule: " + items[0] + " -> " + items[1])
-#    print("Support: " + str(item[1]))
-#    print("Confidence: " + str(item[2][0][2]))
-#    print("Lift: " + str(item[2][0][3]))
-#    print("=====================================")
+
 result.close()
